@@ -9545,6 +9545,7 @@ GameObject:
   - component: {fileID: 498660}
   - component: {fileID: 19867808}
   - component: {fileID: 19975374}
+  - component: {fileID: 8405814277131464655}
   m_Layer: 0
   m_Name: SmallExplosionPink
   m_TagString: Untagged
@@ -14278,6 +14279,18 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!114 &8405814277131464655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 160620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad75b782f2035804b9c96c2b2be36f30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &184806
 GameObject:
   m_ObjectHideFlags: 0

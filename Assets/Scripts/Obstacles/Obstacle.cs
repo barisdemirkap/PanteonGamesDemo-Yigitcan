@@ -20,6 +20,13 @@ public class Obstacle : AbstractObstacle
           {
                Instantiate(fxPrefab, item.point, Quaternion.identity);
           }
+
+          Rigidbody rb;
+          if (collision.collider.TryGetComponent(out rb))
+          {
+               print(rb);
+               rb.AddForce(-collision.contacts[0].point.normalized * 15f, ForceMode.Impulse);
+          }
          
      }
 }

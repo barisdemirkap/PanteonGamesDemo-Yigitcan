@@ -21,12 +21,3 @@ public abstract class AbstractObstacle : MonoBehaviour
           rigidbody.MoveRotation(rigidbody.rotation * deltaRotation);
      }
 }
-/// <summary>
-/// Enum for turn values negative or positive.
-/// </summary>
-public enum Direction : int
-{
-
-     Left = -1,
-     Right = 1
-}

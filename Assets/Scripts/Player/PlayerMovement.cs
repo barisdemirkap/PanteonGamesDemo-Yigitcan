@@ -24,11 +24,13 @@ public class PlayerMovement : MonoBehaviour
      Rigidbody rb;
      #endregion
 
+     private SceneManager sceneManager;
 
      void Start()
      {
           rb = GetComponent<Rigidbody>();
           animator = GetComponent<Animator>();
+          sceneManager = SceneManager.Instance;
      }
 
      void Update()
@@ -107,11 +109,15 @@ public class PlayerMovement : MonoBehaviour
      }
      private void FixedUpdate()
      {
-          MovePlayer();
+          if (sceneManager.GameState == GameState.Playing)
+          {
+               MovePlayer();
+          }
      }
 
      private void MovePlayer()
      {
+
           if (isMoving)
           {
                //rotate player while moving
