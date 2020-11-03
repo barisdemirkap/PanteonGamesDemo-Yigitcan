@@ -28,7 +28,6 @@ public class HalfDonutObstacle : Obstacle, IDynamicObstacle
           while (true)
           {
                int interval = UnityEngine.Random.Range(1, 5);
-               print(interval);
                Quaternion targetRotation = Quaternion.Euler(new Vector3(rotateAmount, 0, 0));
                yield return new WaitForSecondsRealtime(interval);
                while (Quaternion.Angle(rb.rotation, targetRotation)>lerpTreshold)
