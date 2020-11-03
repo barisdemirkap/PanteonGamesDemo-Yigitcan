@@ -1,21 +1,48 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 public class OpponentMovement : Opponent
 {
 
      public Transform target;
+
      Vector2 smoothDeltaPosition = Vector2.zero;
      Vector2 velocity = Vector2.zero;
+
+     float horizontalMax = 5f, verticalMax = 3f;
 
      protected override void Start()
      {
           base.Start();
-          navMeshAgent.SetDestination(target.position);
           navMeshAgent.updatePosition = false;
+          CalculateDestination();
      }
 
      void Update()
+     {
+          Animations();
+          if (SceneManager.Instance.GameState!=GameState.Playing)
+          {
+               navMeshAgent.isStopped = true;
+          }
+          else
+          {
+               navMeshAgent.isStopped = false;
+          }
+     }
+     private void OnAnimatorMove()
+     {
+          // Update position to agent position
+          transform.position = navMeshAgent.nextPosition;
+     }
+     void CalculateDestination()
+     {
+          Vector3 targetPosition = target.position;
+          targetPosition.z += 2f;
+          navMeshAgent.SetDestination(new Vector3(targetPosition.x + (Random.Range(-horizontalMax, horizontalMax)), targetPosition.y, targetPosition.z + (Random.Range(0,verticalMax))));
+     }
+     void Animations()
      {
           Vector3 worldDeltaPosition = navMeshAgent.nextPosition - transform.position;
 
@@ -32,7 +59,7 @@ public class OpponentMovement : Opponent
           //1e-5f means 1 to power of -5 = 0.00001
           if (Time.deltaTime > 1e-5f)
                velocity = smoothDeltaPosition / Time.deltaTime;
-       
+
           bool shouldMove = velocity.magnitude > 0.5f && navMeshAgent.remainingDistance > navMeshAgent.radius;
 
           // Update animation parameters
@@ -41,9 +68,4 @@ public class OpponentMovement : Opponent
           animator.SetFloat("VelY", velocity.y);
      }
 
-     private void OnAnimatorMove()
-     {
-          // Update position to agent position
-          transform.position = navMeshAgent.nextPosition;
-     }
 }
