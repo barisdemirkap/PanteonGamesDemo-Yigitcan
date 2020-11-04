@@ -6,6 +6,6 @@ public class Platform : AbstractObstacle
 {
      protected override void OnCollisionEnter(Collision collision)
      {
-          print("Platform collision");
+
      }
 }
