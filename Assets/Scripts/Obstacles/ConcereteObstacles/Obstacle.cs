@@ -12,6 +12,7 @@ public class Obstacle : AbstractObstacle
      [SerializeField]
      private GameObject fxPrefab;
 
+
      protected override void OnCollisionEnter(Collision collision)
      {
 

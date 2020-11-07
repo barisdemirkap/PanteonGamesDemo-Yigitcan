@@ -7,11 +7,12 @@ public class InputManager : MonoBehaviour
 
      public Vector2 DeltaPosition { get { return deltaPosition; } }
      private Vector2 deltaPosition;
-
-     bool userInput = false;
+     float max = 100f;
+     public bool userInput = false;
 
      private void Update()
      {
+          userInput = Input.touchCount > 0 || Input.GetMouseButton(0);
           if (Input.GetMouseButtonDown(0))
           {
                inputStartPosition = Input.mousePosition;
@@ -34,12 +35,11 @@ public class InputManager : MonoBehaviour
                     inputEndPosition = touch.position;
                }
           }
-          userInput = Input.touchCount > 0 || Input.GetMouseButton(0);
-
           if (userInput)
           {
-               deltaPosition = inputEndPosition - inputStartPosition;
-               deltaPosition = deltaPosition.normalized;
+               Vector2 pos = inputEndPosition - inputStartPosition;
+               deltaPosition.x = Mathf.Clamp(pos.x, -max, max) / max;
+               deltaPosition.y = Mathf.Clamp(pos.y, -max, max) / max;
           }
           else
           {
