@@ -13,6 +13,9 @@ namespace Helpers
      public class Singleton<T> : MonoBehaviour where T : Singleton<T>
      {
           private static T instance;
+          [Header("Singleton Properties")]
+          [Space]
+          [Tooltip("The object should persist between scenes?")]
           public bool isPersistent = false;
           public static T Instance
           {

@@ -5,39 +5,59 @@ using UnityEngine.UI;
 
 public class HUDManager : MonoBehaviour
 {
+     #region Fields
      [Header("UI Components")]
      [Space]
-
-     
-     [SerializeField]
-     private Text positionText;
      [SerializeField]
      private Image paintProgress;
      [SerializeField]
      private StatusText statusText;
-
-     public void UpdatePosition(int position,int total)
+     #endregion
+     #region EngineMethods
+     private void Start()
      {
-          positionText.text = position + "/" + total;
+          //if statusText is null try to find from scene
+          if (statusText == null)
+               statusText = FindObjectOfType<StatusText>();
      }
-     public void UpdatePaintingProgress(int paintArea,int totalArea)
+     #endregion
+     #region ScriptMethods
+     /// <summary>
+     /// This method will update painting progress bar visual in UI
+     /// </summary>
+     /// <param name="paintArea">Painted area amount</param>
+     /// <param name="totalArea">Total area amount</param>
+     public void UpdatePaintingProgress(int paintArea, int totalArea)
      {
-          paintProgress.fillAmount =((float)paintArea / totalArea);
+          paintProgress.fillAmount = ((float)paintArea / totalArea);
      }
+     /// <summary>
+     /// Changes status text without fade animation.
+     /// </summary>
+     /// <param name="message">Message to show</param>
      public void ChangeStatusTextDirect(string message)
      {
           statusText.gameObject.SetActive(true);
           statusText.ChangeTextDirectly(message);
      }
+
+     /// <summary>
+     /// Hide status text object if necessary
+     /// </summary>
      public void HideStatusText() => statusText.gameObject.SetActive(false);
+     /// <summary>
+     /// Show status text with animation
+     /// </summary>
+     /// <param name="message">Status text message</param>
      public void ShowStatusText(string message)
      {
           statusText.gameObject.SetActive(true);
           StartCoroutine(statusText.ChangeStatus(message));
      }
 
-     public void ResetScene()
-     {
-          SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
-     }
+     /// <summary>
+     /// Reset scene for test
+     /// </summary>
+     public void ResetScene()=> SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
+     #endregion
 }

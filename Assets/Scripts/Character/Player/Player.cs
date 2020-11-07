@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public enum PlayerState : int { Idle = 0, Moving, Down, Ended }
@@ -16,8 +17,10 @@ public class Player : AbstractCharacter
      protected Animator animator;
      protected Rigidbody rb;
      protected LevelManager levelManager;
+     [SerializeField]
+     protected TextMeshPro positionText;
+     [SerializeField]
      protected InputManager inputManager;
-
      protected bool isDown;
 
      #endregion
@@ -28,10 +31,18 @@ public class Player : AbstractCharacter
           rb = GetComponent<Rigidbody>();
           animator = GetComponent<Animator>();
           levelManager = LevelManager.Instance;
-          inputManager = FindObjectOfType<InputManager>();
+          if (inputManager == null)
+               inputManager = FindObjectOfType<InputManager>();
+          positionText = GetComponentInChildren<TextMeshPro>();
           levelManager.OnPlayerFinished += StopAnimations;
      }
-
+     private void LateUpdate()
+     {
+          if (levelManager.LevelState == LevelState.Playing)
+          {
+               UpdatePositionText(positionText);
+          }
+     }
      private void OnDisable()
      {
           levelManager.OnPlayerFinished -= StopAnimations;
@@ -54,6 +65,11 @@ public class Player : AbstractCharacter
                isDown = false;
                animator.SetBool("GetHit", isDown);
           }, 0f));
+     }
+
+     public override void UpdatePositionText(TextMeshPro textObject)
+     {
+          positionText.text = levelManager.GetPositionData(this).ToString();
      }
      #endregion
 }

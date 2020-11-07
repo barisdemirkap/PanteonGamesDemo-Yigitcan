@@ -5,38 +5,44 @@ using UnityEngine;
 
 public class PainterController : MonoBehaviour
 {
+     #region Fields
+     [Header("Mandatory Scripts")]
+     [Space]
      [SerializeField]
-     float speed = 5f;
+     InkCanvas canvasObject;
      [SerializeField]
-     float lerpTime = .15f;
+     InputManager inputManager;
+     [SerializeField]
+     private HUDManager hudManager;
 
+     [Header("Script Properties")]
+     [Space]
+     [SerializeField]
+     float speed = 5f, lerpTime = .15f;
      [SerializeField]
      private ParticleSystem spray;
-
      [SerializeField]
      private Brush brush;
-
      private MeshFilter meshFilter;
-
      private int totalTriangles;
-
      List<int> triangles = new List<int>();
-
      Vector2 direction = Vector2.zero;
+     #endregion
 
-     InkCanvas canvasObject;
-     InputManager inputManager;
+     #region EngineMethods
 
-     private HUDManager hudManager;
      void Start()
      {
           spray.Stop();
-          canvasObject = FindObjectOfType<InkCanvas>();
           meshFilter = canvasObject.GetComponent<MeshFilter>();
-          inputManager = FindObjectOfType<InputManager>();
-          hudManager = FindObjectOfType<HUDManager>();
 
-          totalTriangles = meshFilter.mesh.triangles.Length/3;
+          if (canvasObject == null)
+               canvasObject = FindObjectOfType<InkCanvas>();
+          if (inputManager != null)
+               inputManager = FindObjectOfType<InputManager>();
+          if (hudManager == null)
+               hudManager = FindObjectOfType<HUDManager>();
+          totalTriangles = meshFilter.mesh.triangles.Length / 3;
      }
 
      // Update is called once per frame
@@ -46,7 +52,6 @@ public class PainterController : MonoBehaviour
           RaycastHit hitInfo;
           if (Input.GetMouseButton(0))
           {
-
                if (!spray.isPlaying)
                     spray.Play();
                if (Physics.Raycast(ray, out hitInfo))
@@ -56,7 +61,6 @@ public class PainterController : MonoBehaviour
                          triangles.Add(hitInfo.triangleIndex);
                          hudManager.UpdatePaintingProgress(triangles.Count, totalTriangles);
                     }
-
                     if (canvasObject != null)
                          canvasObject.Paint(brush, hitInfo);
                }
@@ -66,11 +70,11 @@ public class PainterController : MonoBehaviour
                 Mathf.Lerp(transform.localPosition.y, Mathf.Clamp(transform.localPosition.y + (speed * direction.y) * Time.deltaTime, -1f, 5f), lerpTime),
                transform.localPosition.z);
           }
-
           if (Input.GetMouseButtonUp(0))
           {
                spray.Stop();
                spray.Clear();
           }
-     }
+     } 
+     #endregion
 }

@@ -12,7 +12,15 @@ public class Obstacle : AbstractObstacle
      [SerializeField]
      private GameObject fxPrefab;
 
-
+     #region Engine Methods
+     protected virtual void Start()
+     {
+          if (fxPrefab == null)
+          {
+               ObsactleVFX vfx = Resources.Load("Obstacle VFX") as ObsactleVFX;
+               fxPrefab = vfx.vfxPrefab;
+          }
+     }
      protected override void OnCollisionEnter(Collision collision)
      {
 
@@ -20,8 +28,6 @@ public class Obstacle : AbstractObstacle
           {
                Instantiate(fxPrefab, item.point, Quaternion.identity);
           }
-
-
           AbstractCharacter abstractCharacter;
           if (collision.collider.TryGetComponent(out abstractCharacter))
           {
@@ -30,6 +36,7 @@ public class Obstacle : AbstractObstacle
                abstractCharacter.ReceiveForce(-direction, 5f);
           }
 
-     }
+     } 
+     #endregion
 }
 

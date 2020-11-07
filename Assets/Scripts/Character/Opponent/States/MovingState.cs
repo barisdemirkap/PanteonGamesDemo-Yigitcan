@@ -1,24 +1,27 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 
 namespace AI.States
 {
      public class MovingState : State<Opponent>
      {
-
-          public MovingState(Opponent context) : base(context)
-          {
-          }
           #region Variables
 
           Vector2 smoothDeltaPosition = Vector2.zero;
           Vector2 velocity = Vector2.zero;
           Vector3 worldDeltaPosition = Vector3.zero;
           Vector2 deltaPosition = Vector2.zero;
+          TextMeshPro positionText;
 
           bool shouldMove;
 
 
           #endregion
+
+          public MovingState(Opponent context, ref TextMeshPro positionText) : base(context)
+          {
+               this.positionText = positionText;
+          }
 
           public override void OnStateEnter()
           {
@@ -29,7 +32,7 @@ namespace AI.States
                Animations();
                context.CheckForFalling();
                CheckReachedDestination();
-
+               context.UpdatePositionText(positionText);
           }
 
           void Animations()
@@ -71,5 +74,5 @@ namespace AI.States
                     }
                }
           }
-     }  
+     }
 }

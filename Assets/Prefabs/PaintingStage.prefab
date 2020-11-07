@@ -45,6 +45,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 859c6dbdf8bb9f5479365096aaee786a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canvasObject: {fileID: 8914690289325110569}
+  inputManager: {fileID: 0}
+  hudManager: {fileID: 0}
   speed: 3
   lerpTime: 1
   spray: {fileID: 8914690289988808704}
@@ -152,7 +155,6 @@ GameObject:
   - component: {fileID: 8914690289325110573}
   - component: {fileID: 8914690289325110574}
   - component: {fileID: 8914690289325110569}
-  - component: {fileID: 8914690289325110570}
   m_Layer: 0
   m_Name: InkCanvas
   m_TagString: InkCanvas
@@ -254,18 +256,6 @@ MonoBehaviour:
     useMainPaint: 1
     useNormalPaint: 0
     useHeightPaint: 0
---- !u!114 &8914690289325110570
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8914690289325110575}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12fc301f794e86d45a2acfc97a3da8fa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8914690289672765408
 GameObject:
   m_ObjectHideFlags: 0
@@ -310,6 +300,7 @@ GameObject:
   - component: {fileID: 8914690289829926157}
   - component: {fileID: 8914690289829926158}
   - component: {fileID: 8914690289829926159}
+  - component: {fileID: 6275594469955435651}
   m_Layer: 0
   m_Name: PaintCamera
   m_TagString: MainCamera
@@ -382,6 +373,37 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8914690289829926160}
   m_Enabled: 1
+--- !u!114 &6275594469955435651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8914690289829926160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
 --- !u!1001 &8914690289969814226
 PrefabInstance:
   m_ObjectHideFlags: 0
