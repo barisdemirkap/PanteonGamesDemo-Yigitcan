@@ -56,6 +56,7 @@ public class Opponent : AbstractCharacter
      {
           stateMachine.currentState?.Update();
      }
+
      private void OnAnimatorMove()
      {
           transform.position = Agent.nextPosition;

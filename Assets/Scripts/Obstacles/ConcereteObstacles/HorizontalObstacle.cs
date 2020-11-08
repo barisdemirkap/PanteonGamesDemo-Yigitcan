@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class HorizontalObstacle : Obstacle, IDynamicObstacle
 {
-     #region Variables
+     #region Fields
      [SerializeField]
      float movementRange = 5f;
      [SerializeField]
@@ -13,7 +13,7 @@ public class HorizontalObstacle : Obstacle, IDynamicObstacle
      [SerializeField]
      float delay = 2f;
 
-     float elapsedTime = 0;
+     float elapsedTime = 0f;
 
      Direction direction = Direction.Right;
      Rigidbody rb;
@@ -22,8 +22,10 @@ public class HorizontalObstacle : Obstacle, IDynamicObstacle
      #endregion
 
 
-     private void Start()
+     #region Engine Methods
+     protected override void Start()
      {
+          base.Start();
           rb = GetComponent<Rigidbody>();
      }
 
@@ -31,6 +33,10 @@ public class HorizontalObstacle : Obstacle, IDynamicObstacle
      {
           Movement();
      }
+     #endregion
+
+
+     #region Script Methods
      public void Movement()
      {
           if (stationary)
@@ -43,10 +49,10 @@ public class HorizontalObstacle : Obstacle, IDynamicObstacle
                else
                     return;
           }
-
           float targetX = movementRange * (int)direction;
-          rb.MovePosition(new Vector3(Mathf.Lerp(transform.position.x, targetX, speed * Time.fixedDeltaTime), transform.position.y, transform.position.z));
-          if (Vector3.Distance(transform.position, new Vector3(targetX, transform.position.y, transform.position.z)) < 0.5f)
+          Vector3 targetPosition = new Vector3(targetX, transform.position.y, transform.position.z);
+          rb.MovePosition(new Vector3(Mathf.Lerp(transform.position.x, targetPosition.x, speed * Time.fixedDeltaTime),targetPosition.y,targetPosition.z));
+          if (Vector3.Distance(transform.position,targetPosition ) < .5f)
           {
                stationary = true;
                elapsedTime = 0;
@@ -60,10 +66,6 @@ public class HorizontalObstacle : Obstacle, IDynamicObstacle
                          break;
                }
           }
-
-
-         
-  
-          
-     }
+     } 
+     #endregion
 }

@@ -21,6 +21,8 @@ public class Player : AbstractCharacter
      protected TextMeshPro positionText;
      [SerializeField]
      protected InputManager inputManager;
+     [SerializeField]
+     private float forceRequiredForFall=10f;
      protected bool isDown;
 
      #endregion
@@ -34,7 +36,7 @@ public class Player : AbstractCharacter
           if (inputManager == null)
                inputManager = FindObjectOfType<InputManager>();
           positionText = GetComponentInChildren<TextMeshPro>();
-          levelManager.OnPlayerFinished += StopAnimations;
+          levelManager.OnPlayerFinished += DanceAnimations;
      }
      private void LateUpdate()
      {
@@ -45,28 +47,43 @@ public class Player : AbstractCharacter
      }
      private void OnDisable()
      {
-          levelManager.OnPlayerFinished -= StopAnimations;
+          levelManager.OnPlayerFinished -= DanceAnimations;
      }
      #endregion
 
      #region OtherMethods
-     private void StopAnimations()
+     private void DanceAnimations(int finishedPosition)
      {
+          //push the character little forward for better camera view 
+          transform.position = transform.position + transform.forward * 2f;
           animator.SetFloat("VelX", 0f);
           animator.SetFloat("VelY", 0f);
-     }
-     public override void ReceiveForce(Vector3 direction, float forceStrength)
-     {
-          isDown = true;
-          rb.AddForce(direction.normalized * forceStrength, ForceMode.Impulse);
-          animator.SetBool("GetHit", isDown);
-          StartCoroutine(HelperMethods.WaitForAnimationFinish(animator, "Downed", () =>
-          {
-               isDown = false;
-               animator.SetBool("GetHit", isDown);
-          }, 0f));
+          if (finishedPosition == 0)
+               //Victory Dance !!!!
+               animator.SetTrigger("Victory");
+          else
+               animator.SetTrigger("Defeated");
      }
 
+     public override void ReceiveForce(Vector3 direction, float forceStrength)
+     {
+
+          rb.AddForce(direction * forceStrength, ForceMode.Impulse);
+          if (forceStrength>=forceRequiredForFall)
+          {
+               isDown = true;
+               animator.SetBool("GetHit", isDown);
+               StartCoroutine(HelperMethods.WaitForAnimationFinish(animator, "Downed", () =>
+               {
+                    isDown = false;
+                    animator.SetBool("GetHit", isDown);
+               }, 0f));
+          }
+     }
+     public void Jump(Vector3 direction)
+     {
+          rb.AddForce(direction, ForceMode.Impulse);
+     }
      public override void UpdatePositionText(TextMeshPro textObject)
      {
           positionText.text = levelManager.GetPositionData(this).ToString();

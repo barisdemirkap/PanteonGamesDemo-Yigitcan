@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Rotator : Obstacle, IDynamicObstacle
 {
-     #region Variables
+     #region Fields
 
      Rigidbody rb;
 
@@ -16,17 +16,24 @@ public class Rotator : Obstacle, IDynamicObstacle
      Direction direction = Direction.Left;
 
      #endregion
-     private void Start()
+
+     #region Engine Methods
+     protected override void Start()
      {
+          base.Start();
           rb = GetComponent<Rigidbody>();
      }
      private void FixedUpdate()
      {
           Movement();
      }
+     #endregion
+
+     #region Script Methods
      public void Movement()
      {
           //We are using base class method for rotating object in fixed deltatime
           RotateObject(angularVelocity, direction, rb);
-     }
+     } 
+     #endregion
 }

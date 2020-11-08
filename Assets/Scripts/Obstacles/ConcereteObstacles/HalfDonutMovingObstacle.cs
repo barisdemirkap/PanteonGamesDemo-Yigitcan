@@ -6,8 +6,6 @@ using UnityEngine;
 public class HalfDonutMovingObstacle : Obstacle, IDynamicObstacle
 {
      #region Variables
-     Rigidbody rb;
-
      [SerializeField]
      float moveSpeed = 5f, lerpThreshold = 0.1f;
 
@@ -19,9 +17,9 @@ public class HalfDonutMovingObstacle : Obstacle, IDynamicObstacle
      #endregion
 
      #region Engine Methods
-     void Start()
+     protected override void Start()
      {
-          rb = GetComponent<Rigidbody>();
+          base.Start();
           startPosition = transform.localPosition;
           targetPosition = new Vector3(-startPosition.x, startPosition.y, startPosition.z);
           Movement();
@@ -29,7 +27,7 @@ public class HalfDonutMovingObstacle : Obstacle, IDynamicObstacle
      #endregion
 
 
-     #region OtherMethods
+     #region Script Methods
      public void Movement()
      {
           StartCoroutine(MoveDonut());

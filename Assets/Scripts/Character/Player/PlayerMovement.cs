@@ -12,7 +12,7 @@ public class PlayerMovement : Player
      [SerializeField]
      float lerpTime = 5f;
 
-     Vector3 newPosition = new Vector3();
+     Vector3 newPosition =Vector3.zero;
 
      Vector2 inputDirection = Vector2.zero;
 
@@ -24,7 +24,7 @@ public class PlayerMovement : Player
      private void Update()
      {
           SetInputDirections();
-          if (transform.position.y < -2f)
+          if (transform.position.y < -5f)
           {
                transform.position = levelManager.startPoint;
           }
@@ -43,7 +43,7 @@ public class PlayerMovement : Player
                newPosition = new Vector3(transform.position.x + moveSpeed * inputDirection.x, 0, transform.position.z + moveSpeed * inputDirection.y);
                //rotate player while moving
                rb.MoveRotation(Quaternion.Slerp(rb.rotation, Quaternion.LookRotation(newPosition), 0.15f));
-               //move player with rigidbody
+               ////move player with rigidbody
                rb.MovePosition(new Vector3(Mathf.Lerp(transform.position.x, newPosition.x, lerpTime * Time.fixedDeltaTime), transform.position.y, Mathf.Lerp(transform.position.z, newPosition.z, lerpTime * Time.fixedDeltaTime)));
                //start moving animation
                animator.SetFloat("VelX", inputDirection.x);

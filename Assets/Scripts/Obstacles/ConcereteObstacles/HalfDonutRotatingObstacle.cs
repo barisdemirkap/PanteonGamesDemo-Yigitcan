@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HalfDonutRotatingObstacle : Obstacle, IDynamicObstacle
 {
-     #region Variables
+     #region Fields
      Rigidbody rb;
 
      [SerializeField]
@@ -15,12 +15,16 @@ public class HalfDonutRotatingObstacle : Obstacle, IDynamicObstacle
      float rotateAmount = 90f;
      #endregion
 
-
-     private void Start()
+     #region Engine Methods
+     protected override void Start()
      {
+          base.Start();
           rb = GetComponent<Rigidbody>();
           Movement();
      }
+     #endregion
+
+     #region Script Method
      public void Movement()
      {
           StartCoroutine(RotateDonut());
@@ -32,19 +36,19 @@ public class HalfDonutRotatingObstacle : Obstacle, IDynamicObstacle
                int interval = UnityEngine.Random.Range(1, 5);
                Quaternion targetRotation = Quaternion.Euler(new Vector3(rotateAmount, 0, 0));
                yield return new WaitForSecondsRealtime(interval);
-               while (Quaternion.Angle(transform.localRotation, targetRotation)>lerpThreshold)
+               while (Quaternion.Angle(transform.localRotation, targetRotation) > lerpThreshold)
                {
                     transform.localRotation = Quaternion.Slerp(transform.localRotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
                     yield return new WaitForFixedUpdate();
                }
                targetRotation = Quaternion.Euler(Vector3.zero);
-               while (Quaternion.Angle(transform.localRotation, targetRotation)> lerpThreshold)
+               while (Quaternion.Angle(transform.localRotation, targetRotation) > lerpThreshold)
                {
                     transform.localRotation = Quaternion.Slerp(transform.localRotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
                     yield return new WaitForFixedUpdate();
                }
-               yield return null; 
+               yield return null;
           }
      }
-
+     #endregion
 }

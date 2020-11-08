@@ -9,8 +9,12 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshObstacle))]
 public class Obstacle : AbstractObstacle
 {
+     #region Fields
      [SerializeField]
-     private GameObject fxPrefab;
+     protected GameObject fxPrefab;
+     [SerializeField]
+     protected float forceAmount = .25f;
+     #endregion
 
      #region Engine Methods
      protected virtual void Start()
@@ -23,20 +27,17 @@ public class Obstacle : AbstractObstacle
      }
      protected override void OnCollisionEnter(Collision collision)
      {
-
           foreach (ContactPoint item in collision.contacts)
           {
                Instantiate(fxPrefab, item.point, Quaternion.identity);
           }
-          AbstractCharacter abstractCharacter;
-          if (collision.collider.TryGetComponent(out abstractCharacter))
+          if (collision.collider.TryGetComponent(out AbstractCharacter abstractCharacter))
           {
                Vector3 direction = collision.contacts[0].point;
                direction.y = 0;
-               abstractCharacter.ReceiveForce(-direction, 5f);
+               abstractCharacter.ReceiveForce(-direction, forceAmount);
           }
-
-     } 
+     }
      #endregion
 }
 
