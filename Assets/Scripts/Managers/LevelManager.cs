@@ -8,7 +8,7 @@ using UnityStandardAssets.Utility;
 /// <summary>
 /// Enum for controling game flow.
 /// </summary>
-public enum LevelState { Initialized,Countdown, Playing, Paused, Result, Painting, Ended }
+public enum LevelState { Initialized, Countdown, Playing, Paused, Result, Painting, Ended }
 public class LevelManager : Singleton<LevelManager>
 {
      #region Fields
@@ -31,11 +31,23 @@ public class LevelManager : Singleton<LevelManager>
      [Space]
      [SerializeField]
      private GameObject paintStage;
+     [SerializeField]
+     
+     private float cameraTransitionSpeed = 5f;
+
+     [Header("Results Text")]
+     [Space]
+     [TextArea(5,10)]
+     [SerializeField]
+     private string victoryText = "Perfectly Splendid!! \n You Win the Race";
+     [TextArea(5, 10)]
+     [SerializeField]
+     private string defeatText = "Better Luck Next Time";
 
      public LevelState LevelState { get; private set; }
 
      public Vector3 startPoint = Vector3.zero;
-
+     //all active character 
      private List<AbstractCharacter> characters = new List<AbstractCharacter>();
 
      //Finished characters
@@ -45,7 +57,7 @@ public class LevelManager : Singleton<LevelManager>
      #region Events
      public Action OnInitalized;
      public Action OnFirstTapGiven;
-     public Action OnPlayerFinished;
+     public Action<int> OnPlayerFinished;
      #endregion
 
 
@@ -66,7 +78,7 @@ public class LevelManager : Singleton<LevelManager>
      {
           if (LevelState == LevelState.Initialized && (Input.touchCount > 0 || Input.GetMouseButtonDown(0)))
           {
-                    StartCoroutine(Countdown(3));
+               StartCoroutine(Countdown(3));
           }
      }
      private void OnDisable()
@@ -108,15 +120,23 @@ public class LevelManager : Singleton<LevelManager>
           if (obj is Player)
           {
                SetLevelState(LevelState.Result);
-               obj.transform.Translate(obj.transform.forward * 2f);
-               OnPlayerFinished?.Invoke();
+               OnPlayerFinished?.Invoke(finishedCharacters.IndexOf(player));
                StartCoroutine(CameraTransition(() =>
                {
-                    SetLevelState(LevelState.Painting);
-                    Camera.main.gameObject.SetActive(false);
-                    paintStage.SetActive(true);
+                    StartCoroutine(ResultActions(() =>
+                    {
+                         TransitionToPaintingStage();
+                    }));
                }));
           }
+     }
+
+     void TransitionToPaintingStage()
+     {
+          SetLevelState(LevelState.Painting);
+          Camera.main.gameObject.SetActive(false);
+          paintStage.SetActive(true);
+          hudManager.ShowPaintingProgress();
      }
 
      #endregion
@@ -143,11 +163,11 @@ public class LevelManager : Singleton<LevelManager>
           camera.GetComponent<SmoothFollow>().enabled = false;
           while (Vector3.Distance(camera.transform.position, target.transform.position) > .1f)
           {
-               camera.transform.position = Vector3.Lerp(camera.transform.position, target.transform.position, 1f * Time.deltaTime);
+               camera.transform.position = Vector3.Lerp(camera.transform.position, target.transform.position, cameraTransitionSpeed * Time.deltaTime);
                Vector3 targetAngle = new Vector3(
-                    Mathf.LerpAngle(camera.transform.rotation.eulerAngles.x, target.rotation.eulerAngles.x, 1f * Time.deltaTime),
-                    Mathf.LerpAngle(camera.transform.rotation.eulerAngles.y, target.rotation.eulerAngles.y, 1f * Time.deltaTime),
-                    Mathf.LerpAngle(camera.transform.rotation.eulerAngles.z, target.rotation.eulerAngles.z, 1f * Time.deltaTime)
+                    Mathf.LerpAngle(camera.transform.rotation.eulerAngles.x, target.rotation.eulerAngles.x, cameraTransitionSpeed * Time.deltaTime),
+                    Mathf.LerpAngle(camera.transform.rotation.eulerAngles.y, target.rotation.eulerAngles.y, cameraTransitionSpeed * Time.deltaTime),
+                    Mathf.LerpAngle(camera.transform.rotation.eulerAngles.z, target.rotation.eulerAngles.z, cameraTransitionSpeed * Time.deltaTime)
                     );
                camera.transform.eulerAngles = targetAngle;
                yield return null;
@@ -157,7 +177,12 @@ public class LevelManager : Singleton<LevelManager>
 
      IEnumerator ResultActions(Action OnFinished)
      {
-          yield return null;
+          if (finishedCharacters[0] == player)
+               hudManager.ShowStatusText(victoryText, 3f);
+          else
+               hudManager.ShowStatusText(defeatText, 3f);
+
+          yield return new WaitForSeconds(3f);
           OnFinished?.Invoke();
      }
      #endregion

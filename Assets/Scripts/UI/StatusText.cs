@@ -27,12 +27,12 @@ public class StatusText :MonoBehaviour
      /// </summary>
      /// <param name="displayText"></param>
      /// <returns></returns>
-     public IEnumerator ChangeStatus(string displayText)
+     public IEnumerator ChangeStatus(string displayText, float displayTime = 1.51f)
      {
           canvasRenderer.SetAlpha(0);
           statusText.text = displayText;
           statusText.CrossFadeAlpha(1, 1.5f, false);
-          yield return new WaitForSeconds(1.51f);
+          yield return new WaitForSeconds(displayTime);
           statusText.CrossFadeAlpha(0, 1.5f, false);
           yield return new WaitForSeconds(1.51f);
           gameObject.SetActive(false);

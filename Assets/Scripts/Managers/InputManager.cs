@@ -6,9 +6,10 @@ public class InputManager : MonoBehaviour
      Vector2 inputStartPosition, inputEndPosition;
 
      public Vector2 DeltaPosition { get { return deltaPosition; } }
-     private Vector2 deltaPosition;
+     private Vector2 deltaPosition = Vector2.zero;
      float max = 100f;
-     public bool userInput = false;
+
+     private bool userInput = false;
 
      private void Update()
      {

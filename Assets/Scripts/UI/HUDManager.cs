@@ -9,9 +9,11 @@ public class HUDManager : MonoBehaviour
      [Header("UI Components")]
      [Space]
      [SerializeField]
-     private Image paintProgress;
-     [SerializeField]
      private StatusText statusText;
+     [SerializeField]
+     private ProgressBar progressBar;
+     [SerializeField]
+     private Button nextLevelButton;
      #endregion
      #region EngineMethods
      private void Start()
@@ -23,13 +25,22 @@ public class HUDManager : MonoBehaviour
      #endregion
      #region ScriptMethods
      /// <summary>
+     /// Show painting progress UI components
+     /// </summary>
+     public void ShowPaintingProgress() => progressBar.gameObject.SetActive(true);
+     /// <summary>
      /// This method will update painting progress bar visual in UI
      /// </summary>
      /// <param name="paintArea">Painted area amount</param>
      /// <param name="totalArea">Total area amount</param>
      public void UpdatePaintingProgress(int paintArea, int totalArea)
      {
-          paintProgress.fillAmount = ((float)paintArea / totalArea);
+          var progress = ((float)paintArea / totalArea);
+          if (progress>.75f)
+          {
+               nextLevelButton.gameObject.SetActive(true);
+          }
+          progressBar.UpdateProgress(progress);
      }
      /// <summary>
      /// Changes status text without fade animation.
@@ -53,6 +64,16 @@ public class HUDManager : MonoBehaviour
      {
           statusText.gameObject.SetActive(true);
           StartCoroutine(statusText.ChangeStatus(message));
+     }
+     /// <summary>
+     /// Show status text with animation stated displayTime
+     /// </summary>
+     /// <param name="message">Status text message</param>
+     /// <param name="displayTime">Text display time before fading</param>
+     public void ShowStatusText(string message, float displayTime)
+     {
+          statusText.gameObject.SetActive(true);
+          StartCoroutine(statusText.ChangeStatus(message,displayTime));
      }
 
      /// <summary>

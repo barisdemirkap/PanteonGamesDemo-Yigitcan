@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 8236361240040347588}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.92, y: 2.72, z: 2.2}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -124,9 +124,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abb51fb211bdcca4d9558660f0f2f66f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fxPrefab: {fileID: 2784014846242232571, guid: 696f7532a6c895e439b81af93a98614d,
+    type: 3}
+  forceAmount: 10
   movementRange: 5
   speed: 1
-  delay: 2
+  delay: 0.1
 --- !u!208 &4773974298173127441
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -137,7 +140,7 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 0.947, y: 2.562, z: 0.93200004}
+  m_Extents: {x: 1.235, y: 2.562, z: 0.94}
   m_MoveThreshold: 0.1
   m_Carve: 0
   m_CarveOnlyStationary: 1

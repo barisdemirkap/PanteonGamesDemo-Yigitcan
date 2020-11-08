@@ -125,6 +125,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fxPrefab: {fileID: 0}
+  forceAmount: 5
 --- !u!208 &1109813139
 NavMeshObstacle:
   m_ObjectHideFlags: 0
