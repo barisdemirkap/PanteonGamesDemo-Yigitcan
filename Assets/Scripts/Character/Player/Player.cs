@@ -68,7 +68,7 @@ public class Player : AbstractCharacter
      public override void ReceiveForce(Vector3 direction, float forceStrength)
      {
 
-          rb.AddForce(direction * forceStrength, ForceMode.Impulse);
+          rb.AddForce(direction * forceStrength, ForceMode.Force);
           if (forceStrength>=forceRequiredForFall)
           {
                isDown = true;
@@ -77,6 +77,7 @@ public class Player : AbstractCharacter
                {
                     isDown = false;
                     animator.SetBool("GetHit", isDown);
+                    rb.velocity = Vector3.zero;
                }, 0f));
           }
      }

@@ -13,7 +13,7 @@ public class Obstacle : AbstractObstacle
      [SerializeField]
      protected GameObject fxPrefab;
      [SerializeField]
-     protected float forceAmount = .25f;
+     protected float forceAmount = 5f;
      #endregion
 
      #region Engine Methods
