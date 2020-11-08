@@ -56,6 +56,7 @@ public class Player : AbstractCharacter
      {
           //push the character little forward for better camera view 
           transform.position = transform.position + transform.forward * 2f;
+          positionText.gameObject.SetActive(false);
           animator.SetFloat("VelX", 0f);
           animator.SetFloat("VelY", 0f);
           if (finishedPosition == 0)

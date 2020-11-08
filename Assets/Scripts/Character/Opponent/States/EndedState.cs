@@ -11,6 +11,7 @@
                context.Animator.SetBool("Moving", false);
                context.Agent.isStopped = true;
                //TODO:play ended animation here
+               context.HidePostionText();
           }
           public override void Update() { }
      } 

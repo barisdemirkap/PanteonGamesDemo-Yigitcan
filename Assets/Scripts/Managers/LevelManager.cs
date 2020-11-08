@@ -46,7 +46,9 @@ public class LevelManager : Singleton<LevelManager>
 
      public LevelState LevelState { get; private set; }
 
+     //player starting position
      public Vector3 startPoint = Vector3.zero;
+
      //all active character 
      private List<AbstractCharacter> characters = new List<AbstractCharacter>();
 
@@ -55,7 +57,6 @@ public class LevelManager : Singleton<LevelManager>
      #endregion
 
      #region Events
-     public Action OnInitalized;
      public Action OnFirstTapGiven;
      public Action<int> OnPlayerFinished;
      #endregion
@@ -80,7 +81,13 @@ public class LevelManager : Singleton<LevelManager>
           {
                StartCoroutine(Countdown(3));
           }
+          if (LevelState == LevelState.Playing)
+          {
+               //sort character lists
+               characters.Sort((x, y) => y.GetDistanceTravelled(startPoint, y.transform).CompareTo(x.GetDistanceTravelled(startPoint, x.transform)));
+          }
      }
+
      private void OnDisable()
      {
           finishline.OnFinishlinePassed -= FinishlinePassed;
@@ -89,16 +96,23 @@ public class LevelManager : Singleton<LevelManager>
 
 
      #region Script Methods
+     /// <summary>
+     /// Returns position in the race
+     /// </summary>
+     /// <param name="character">Position requesting character</param>
+     /// <returns></returns>
      public int GetPositionData(AbstractCharacter character)
      {
-          characters.Sort((x, y) => y.GetDistanceTravelled(startPoint, y.transform).CompareTo(x.GetDistanceTravelled(startPoint, x.transform)));
           return characters.IndexOf(character) + 1;
      }
+
      public void SetLevelState(LevelState state)
      {
-          //Changes the state
           LevelState = state;
      }
+     /// <summary>
+     /// Scene first enter setup
+     /// </summary>
      void SetupScene()
      {
           if (player == null)
@@ -109,18 +123,24 @@ public class LevelManager : Singleton<LevelManager>
 
           characters.AddRange(opponents);
           SetLevelState(LevelState.Initialized);
-          OnInitalized?.Invoke();
           Debug.Log("Total characters: " + characters.Count);
           Debug.Log("Opponent characters: " + opponents.Count);
      }
 
+     /// <summary>
+     /// Finisline passed action from finishline script
+     /// </summary>
+     /// <param name="obj">Character crossed the finish line</param>
      private void FinishlinePassed(AbstractCharacter obj)
      {
           finishedCharacters.Add(obj);
           if (obj is Player)
           {
                SetLevelState(LevelState.Result);
+               //Send player finished signal
                OnPlayerFinished?.Invoke(finishedCharacters.IndexOf(player));
+
+               //coroutine chain for camera transition and results
                StartCoroutine(CameraTransition(() =>
                {
                     StartCoroutine(ResultActions(() =>
@@ -138,11 +158,13 @@ public class LevelManager : Singleton<LevelManager>
           paintStage.SetActive(true);
           hudManager.ShowPaintingProgress();
      }
-
      #endregion
-
-
      #region Coroutines
+     /// <summary>
+     /// Counts down from given number of seconds
+     /// </summary>
+     /// <param name="countdownFrom">Countdown start number</param>
+     /// <returns></returns>
      IEnumerator Countdown(int countdownFrom)
      {
           SetLevelState(LevelState.Countdown);
@@ -155,6 +177,11 @@ public class LevelManager : Singleton<LevelManager>
           SetLevelState(LevelState.Playing);
           OnFirstTapGiven?.Invoke();
      }
+     /// <summary>
+     /// Camera transition for results state
+     /// </summary>
+     /// <param name="OnFinished">Callback function</param>
+     /// <returns></returns>
      IEnumerator CameraTransition(Action OnFinished)
      {
           //TODO: Some celebration particles and animations and transition to paint camera
@@ -174,7 +201,11 @@ public class LevelManager : Singleton<LevelManager>
           }
           OnFinished?.Invoke();
      }
-
+     /// <summary>
+     /// Results state coroutine for celebration or etc.
+     /// </summary>
+     /// <param name="OnFinished">Callback action</param>
+     /// <returns></returns>
      IEnumerator ResultActions(Action OnFinished)
      {
           if (finishedCharacters[0] == player)

@@ -998,7 +998,7 @@ PrefabInstance:
     - target: {fileID: 2973735432329411140, guid: b57e0c42a2d1e8a47b4fce162b98b567,
         type: 3}
       propertyPath: m_Antialiasing
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2973735432329411140, guid: b57e0c42a2d1e8a47b4fce162b98b567,
         type: 3}
@@ -1760,12 +1760,12 @@ PrefabInstance:
       objectReference: {fileID: 641900240}
     - target: {fileID: 1741881416, guid: c5a78f86ecb058641863c1772e1cb66b, type: 3}
       propertyPath: brush.brushScale
-      value: 0.075
+      value: 0.08
       objectReference: {fileID: 0}
     - target: {fileID: 6275594469955435651, guid: c5a78f86ecb058641863c1772e1cb66b,
         type: 3}
       propertyPath: m_RenderPostProcessing
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8914690289672765343, guid: c5a78f86ecb058641863c1772e1cb66b,
         type: 3}
@@ -2299,7 +2299,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1790168869, guid: e2deec61b180ec744ac451ede4341d54, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 27
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1790168869, guid: e2deec61b180ec744ac451ede4341d54, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1790168869, guid: e2deec61b180ec744ac451ede4341d54, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1790168869, guid: e2deec61b180ec744ac451ede4341d54, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1790168869, guid: e2deec61b180ec744ac451ede4341d54, type: 3}
+      propertyPath: m_Pivot.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1790168869, guid: e2deec61b180ec744ac451ede4341d54, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 285.88672
+      objectReference: {fileID: 0}
+    - target: {fileID: 1790168869, guid: e2deec61b180ec744ac451ede4341d54, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 114.35469
       objectReference: {fileID: 0}
     - target: {fileID: 1790168870, guid: e2deec61b180ec744ac451ede4341d54, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -2774,7 +2798,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &771455108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4531,6 +4555,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 973868070046680733, guid: db9bad2873b346146994913d7112f4d4,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 34.6
+      objectReference: {fileID: 0}
     - target: {fileID: 973868070046680737, guid: db9bad2873b346146994913d7112f4d4,
         type: 3}
       propertyPath: m_Name
@@ -5050,7 +5079,7 @@ MonoBehaviour:
   - {fileID: 1101804773}
   paintStage: {fileID: 368947248}
   cameraTransitionSpeed: 3
-  victoryText: "Perfectly Splendid!! \n You Win the Race"
+  victoryText: "Perfectly Splendid!!! \nYou Are the Winner"
   defeatText: Better Luck Next Time
   startPoint: {x: 0, y: 0, z: 0}
 --- !u!114 &1790168870 stripped

@@ -2,17 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class JumpPad : Platform
+public class JumpPad : AbstractPlatform
 {
+     #region Fields
      [SerializeField]
      private float forwardForce = 5f, upForce = 10f;
-
-     protected override void OnCollisionEnter(Collision collision)
+     #endregion
+     #region Engine Methods
+     void OnCollisionEnter(Collision collision)
      {
-          
           if (collision.gameObject.TryGetComponent(out Player character))
           {
-                    character.Jump((character.transform.forward * forwardForce) + (Vector3.up * upForce));
+               character.Jump((character.transform.forward * forwardForce) + (Vector3.up * upForce));
           }
-     }
+     } 
+     #endregion
 }

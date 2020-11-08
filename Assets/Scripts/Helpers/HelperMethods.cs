@@ -31,4 +31,17 @@ public static class HelperMethods
           }
 
      }
+
+     /// <summary>
+     /// Rotates given rigidbody in fixed delta time
+     /// </summary>
+     /// <param name="angleVelocity">Rotation amount per second</param>
+     /// <param name="direction">Rotation direction</param>
+     /// <param name="rigidbody">Game objects rigidbody component reference</param>
+     public static void RotateObject(Vector3 angleVelocity, Direction direction, Rigidbody rigidbody)
+     {
+          //casting direction enum value for calculation
+          Quaternion deltaRotation = Quaternion.Euler(angleVelocity * (int)direction * Time.fixedDeltaTime);
+          rigidbody.MoveRotation(rigidbody.rotation * deltaRotation);
+     }
 }

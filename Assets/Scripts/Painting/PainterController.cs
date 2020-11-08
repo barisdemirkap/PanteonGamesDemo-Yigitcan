@@ -48,9 +48,19 @@ public class PainterController : MonoBehaviour
      // Update is called once per frame
      void Update()
      {
+          if(Input.GetMouseButtonDown(0)|| (Input.touchCount>0 && Input.GetTouch(0).phase==TouchPhase.Began))
+          {
+               //set spray can position to mouse position
+               float dist = transform.position.z - Camera.main.transform.position.z;
+               Vector3 pos = Input.mousePosition;
+               pos.z = dist;
+               pos = Camera.main.ScreenToWorldPoint(pos);
+               pos.y = transform.position.y;
+               transform.position = pos;
+          }
           Ray ray = new Ray(transform.position, transform.forward);
           RaycastHit hitInfo;
-          if (Input.GetMouseButton(0))
+          if (Input.GetMouseButton(0)||Input.touchCount>0)
           {
                if (!spray.isPlaying)
                     spray.Play();
@@ -70,7 +80,7 @@ public class PainterController : MonoBehaviour
                 Mathf.Lerp(transform.localPosition.y, Mathf.Clamp(transform.localPosition.y + (speed * direction.y) * Time.deltaTime, -1f, 5f), lerpTime),
                transform.localPosition.z);
           }
-          if (Input.GetMouseButtonUp(0))
+          if (Input.GetMouseButtonUp(0)||Input.touchCount<0)
           {
                spray.Stop();
                spray.Clear();

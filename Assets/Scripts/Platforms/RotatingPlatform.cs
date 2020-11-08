@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshModifier))]
-public class RotatingPlatform : Platform, IDynamicPlatform
+public class RotatingPlatform : AbstractPlatform, IDynamicPlatform
 {
      #region Fields
      ///rotation per second
@@ -34,8 +34,7 @@ public class RotatingPlatform : Platform, IDynamicPlatform
      #region Script Methods
      public void PlatformMovement()
      {
-          //We are using base class method for rotating object in fixed deltatime
-          RotateObject(angleVelocity, direction, rb);
+          HelperMethods.RotateObject(angleVelocity, direction, rb);
      } 
      #endregion
 }

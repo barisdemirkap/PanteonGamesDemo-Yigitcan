@@ -2,10 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Platform : AbstractObstacle
+public class AbstractPlatform : MonoBehaviour
 {
-     protected override void OnCollisionEnter(Collision collision)
-     {
-
-     }
 }

@@ -33,7 +33,7 @@ public class Rotator : Obstacle, IDynamicObstacle
      public void Movement()
      {
           //We are using base class method for rotating object in fixed deltatime
-          RotateObject(angularVelocity, direction, rb);
+          HelperMethods.RotateObject(angularVelocity, direction, rb);
      } 
      #endregion
 }

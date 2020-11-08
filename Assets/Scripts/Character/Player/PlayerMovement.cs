@@ -11,6 +11,8 @@ public class PlayerMovement : Player
      float moveSpeed = 5f;
      [SerializeField]
      float lerpTime = 5f;
+     [SerializeField]
+     float fallingThreshold = 5f;
 
      Vector3 newPosition =Vector3.zero;
 
@@ -24,7 +26,7 @@ public class PlayerMovement : Player
      private void Update()
      {
           SetInputDirections();
-          if (transform.position.y < -5f)
+          if (transform.position.y < -fallingThreshold)
           {
                transform.position = levelManager.startPoint;
           }
@@ -38,6 +40,7 @@ public class PlayerMovement : Player
      }
      private void MovePlayer()
      {
+          //rotate our player if its not downed state
           if (!isDown)
           {
                newPosition = new Vector3(transform.position.x + moveSpeed * inputDirection.x, 0, transform.position.z + moveSpeed * inputDirection.y);

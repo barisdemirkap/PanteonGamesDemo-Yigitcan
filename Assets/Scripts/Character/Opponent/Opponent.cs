@@ -71,6 +71,7 @@ public class Opponent : AbstractCharacter
      {
           textObject.text = LevelManager.GetPositionData(this).ToString();
      }
+     public void HidePostionText() => positionText.gameObject.SetActive(false);
      public void CalculateDestination()
      {
           Vector3 targetPosition = target.gameObject.transform.position;
