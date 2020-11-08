@@ -5,7 +5,10 @@ using UnityEngine;
 
 public class Finishline : MonoBehaviour
 {
+     #region Actions
      public Action<AbstractCharacter> OnFinishlinePassed;
+     #endregion
+     #region Engine Methods
      private void OnTriggerEnter(Collider other)
      {
           AbstractCharacter character;
@@ -13,5 +16,6 @@ public class Finishline : MonoBehaviour
           {
                OnFinishlinePassed?.Invoke(character);
           }
-     }
+     } 
+     #endregion
 }

@@ -1,7 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// Finite state machine class
+/// </summary>
+/// <typeparam name="T">Context of state machine</typeparam>
 public class StateMachine<T>
 {
      public Dictionary<int, State<T>> StateCache { get; protected set; }

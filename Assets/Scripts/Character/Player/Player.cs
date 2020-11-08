@@ -6,7 +6,7 @@ using UnityEngine;
 
 public enum PlayerState : int { Idle = 0, Moving, Down, Ended }
 /// <summary>
-/// Concerete player class
+/// Concrete player class
 /// </summary>
 /// 
 [RequireComponent(typeof(Animator))]
@@ -82,6 +82,7 @@ public class Player : AbstractCharacter
                }, 0f));
           }
      }
+
      public void Jump(Vector3 direction)
      {
           rb.AddForce(direction, ForceMode.Impulse);

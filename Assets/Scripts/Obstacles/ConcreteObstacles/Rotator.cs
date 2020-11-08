@@ -32,7 +32,7 @@ public class Rotator : Obstacle, IDynamicObstacle
      #region Script Methods
      public void Movement()
      {
-          //We are using base class method for rotating object in fixed deltatime
+          //We are using helper method for rotating object in fixed deltatime
           HelperMethods.RotateObject(angularVelocity, direction, rb);
      } 
      #endregion

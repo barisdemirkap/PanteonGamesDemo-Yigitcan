@@ -24,7 +24,7 @@ public class HalfDonutRotatingObstacle : Obstacle, IDynamicObstacle
      }
      #endregion
 
-     #region Script Method
+     #region Script Methods
      public void Movement()
      {
           StartCoroutine(RotateDonut());

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 /// <summary>
-/// Concerete obstacle class
+/// Concrete obstacle class
 /// </summary>
 [RequireComponent(typeof(NavMeshObstacle))]
 public class Obstacle : AbstractObstacle
@@ -19,6 +19,7 @@ public class Obstacle : AbstractObstacle
      #region Engine Methods
      protected virtual void Start()
      {
+          // get fxPrefab from scriptable object if its not defined from inspector
           if (fxPrefab == null)
           {
                ObsactleVFX vfx = Resources.Load("Obstacle VFX") as ObsactleVFX;

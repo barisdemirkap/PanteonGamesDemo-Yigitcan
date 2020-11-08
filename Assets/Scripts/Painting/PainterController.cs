@@ -23,6 +23,7 @@ public class PainterController : MonoBehaviour
      private ParticleSystem spray;
      [SerializeField]
      private Brush brush;
+
      private MeshFilter meshFilter;
      private int totalTriangles;
      List<int> triangles = new List<int>();
@@ -30,7 +31,6 @@ public class PainterController : MonoBehaviour
      #endregion
 
      #region EngineMethods
-
      void Start()
      {
           spray.Stop();
@@ -45,7 +45,6 @@ public class PainterController : MonoBehaviour
           totalTriangles = meshFilter.mesh.triangles.Length / 3;
      }
 
-     // Update is called once per frame
      void Update()
      {
           if(Input.GetMouseButtonDown(0)|| (Input.touchCount>0 && Input.GetTouch(0).phase==TouchPhase.Began))

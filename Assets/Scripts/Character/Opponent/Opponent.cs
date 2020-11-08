@@ -7,7 +7,7 @@ using UnityEngine.AI;
 
 public enum AIState { Idle, Moving, Down, Ended }
 /// <summary>
-/// Concerete opponent class
+/// Concrete opponent class
 /// </summary>
 [RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(Rigidbody))]

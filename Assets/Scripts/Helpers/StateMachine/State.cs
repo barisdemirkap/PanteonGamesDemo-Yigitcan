@@ -1,4 +1,8 @@
-﻿public abstract class State<T>
+﻿/// <summary>
+/// Finite state machine states base class
+/// </summary>
+/// <typeparam name="T">Context object of state machine</typeparam>
+public abstract class State<T>
 {
      protected T context;
 

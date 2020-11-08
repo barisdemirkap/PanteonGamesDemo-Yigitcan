@@ -14,10 +14,9 @@ public class HorizontalObstacle : Obstacle, IDynamicObstacle
      float delay = 2f;
 
      float elapsedTime = 0f;
-
+     //Move direction
      Direction direction = Direction.Right;
      Rigidbody rb;
-
      bool stationary = false;
      #endregion
 

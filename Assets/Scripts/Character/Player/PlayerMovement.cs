@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class PlayerMovement : Player
 {
-     #region Variables
+     #region Fields
      [SerializeField]
      float moveSpeed = 5f;
      [SerializeField]
@@ -19,10 +19,9 @@ public class PlayerMovement : Player
      Vector2 inputDirection = Vector2.zero;
 
      #endregion
-     void SetInputDirections()
-     {
-          inputDirection = inputManager.DeltaPosition;
-     }
+
+     #region Engine Methods
+
      private void Update()
      {
           SetInputDirections();
@@ -37,6 +36,13 @@ public class PlayerMovement : Player
           {
                MovePlayer();
           }
+     } 
+     #endregion
+     #region Script Methods
+     void SetInputDirections()
+     {
+          //receive input directions from input manager
+          inputDirection = inputManager.DeltaPosition;
      }
      private void MovePlayer()
      {
@@ -52,5 +58,6 @@ public class PlayerMovement : Player
                animator.SetFloat("VelX", inputDirection.x);
                animator.SetFloat("VelY", inputDirection.y);
           }
-     }
+     } 
+     #endregion
 }
