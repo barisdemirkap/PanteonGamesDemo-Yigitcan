@@ -47,43 +47,65 @@ public class PainterController : MonoBehaviour
 
      void Update()
      {
-          if(Input.GetMouseButtonDown(0)|| (Input.touchCount>0 && Input.GetTouch(0).phase==TouchPhase.Began))
+          if (LevelManager.Instance.LevelState==LevelState.Painting)
           {
-               //set spray can position to mouse position
-               float dist = transform.position.z - Camera.main.transform.position.z;
-               Vector3 pos = Input.mousePosition;
-               pos.z = dist;
-               pos = Camera.main.ScreenToWorldPoint(pos);
-               pos.y = transform.position.y;
-               transform.position = pos;
+               Painting();
           }
-          Ray ray = new Ray(transform.position, transform.forward);
-          RaycastHit hitInfo;
-          if (Input.GetMouseButton(0)||Input.touchCount>0)
+     }
+     #endregion
+
+     #region Script Methods
+     void Painting()
+     {
+          if (Input.GetMouseButtonDown(0) || (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began))
           {
-               if (!spray.isPlaying)
-                    spray.Play();
-               if (Physics.Raycast(ray, out hitInfo))
-               {
-                    if (!triangles.Contains(hitInfo.triangleIndex))
-                    {
-                         triangles.Add(hitInfo.triangleIndex);
-                         hudManager.UpdatePaintingProgress(triangles.Count, totalTriangles);
-                    }
-                    if (canvasObject != null)
-                         canvasObject.Paint(brush, hitInfo);
-               }
-               direction = inputManager.DeltaPosition;
-               transform.localPosition = new Vector3(
-               Mathf.Lerp(transform.localPosition.x, Mathf.Clamp(transform.localPosition.x + (speed * direction.x) * Time.deltaTime, -2.5f, 2.5f), lerpTime),
-                Mathf.Lerp(transform.localPosition.y, Mathf.Clamp(transform.localPosition.y + (speed * direction.y) * Time.deltaTime, -1f, 5f), lerpTime),
-               transform.localPosition.z);
+               SetPainterObjectToTouchPosition();
           }
-          if (Input.GetMouseButtonUp(0)||Input.touchCount<0)
+          
+          if (Input.GetMouseButton(0) || Input.touchCount > 0)
           {
+               PaintFunction();
+          }
+          if (Input.GetMouseButtonUp(0) || Input.touchCount < 0)
+          {
+               //clear particles
                spray.Stop();
                spray.Clear();
           }
-     } 
+     }
+
+     void SetPainterObjectToTouchPosition()
+     {
+          //set spray can position to mouse position
+          float dist = transform.position.z - Camera.main.transform.position.z;
+          Vector3 pos = Input.mousePosition;
+          pos.z = dist;
+          pos = Camera.main.ScreenToWorldPoint(pos);
+          pos.y = transform.position.y;
+          transform.position = pos;
+     }
+     void PaintFunction()
+     {
+          //cast a ray from transform forward and paint hitpoint with brush texture
+          Ray ray = new Ray(transform.position, transform.forward);
+          RaycastHit hitInfo;
+          if (!spray.isPlaying)
+               spray.Play();
+          if (Physics.Raycast(ray, out hitInfo))
+          {
+               if (!triangles.Contains(hitInfo.triangleIndex))
+               {
+                    triangles.Add(hitInfo.triangleIndex);
+                    hudManager.UpdatePaintingProgress(triangles.Count, totalTriangles);
+               }
+               if (canvasObject != null)
+                    canvasObject.Paint(brush, hitInfo);
+          }
+          direction = inputManager.DeltaPosition;
+          transform.localPosition = new Vector3(
+          Mathf.Lerp(transform.localPosition.x, Mathf.Clamp(transform.localPosition.x + (speed * direction.x) * Time.deltaTime, -2.5f, 2.5f), lerpTime),
+           Mathf.Lerp(transform.localPosition.y, Mathf.Clamp(transform.localPosition.y + (speed * direction.y) * Time.deltaTime, -1f, 5f), lerpTime),
+          transform.localPosition.z);
+     }
      #endregion
 }

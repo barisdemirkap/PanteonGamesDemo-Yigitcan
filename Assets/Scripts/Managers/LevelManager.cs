@@ -32,12 +32,13 @@ public class LevelManager : Singleton<LevelManager>
      [SerializeField]
      private GameObject paintStage;
      [SerializeField]
-     
      private float cameraTransitionSpeed = 5f;
+     [SerializeField]
+     private Transform characterPaintingPosition;
 
      [Header("Results Text")]
      [Space]
-     [TextArea(5,10)]
+     [TextArea(5, 10)]
      [SerializeField]
      private string victoryText = "Perfectly Splendid!! \n You Win the Race";
      [TextArea(5, 10)]
@@ -70,6 +71,8 @@ public class LevelManager : Singleton<LevelManager>
                finishline = FindObjectOfType<Finishline>();
           if (hudManager == null)
                hudManager = FindObjectOfType<HUDManager>();
+          if (characterPaintingPosition == null)
+               characterPaintingPosition = paintStage.transform.Find("PlayerPosition");
           SetupScene();
           //subscribe to finishline passed action
           finishline.OnFinishlinePassed += FinishlinePassed;
@@ -156,6 +159,7 @@ public class LevelManager : Singleton<LevelManager>
           SetLevelState(LevelState.Painting);
           Camera.main.gameObject.SetActive(false);
           paintStage.SetActive(true);
+          player.transform.position = characterPaintingPosition.position;
           hudManager.ShowPaintingProgress();
      }
      #endregion
